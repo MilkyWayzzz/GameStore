@@ -8,6 +8,7 @@ namespace GameStore.WebUI.Models
 {
     public class CartIndexViewModel
     {
+        //vlad test
         public Cart Cart { get; set; }
         public string ReturnUrl { get; set; }
     }

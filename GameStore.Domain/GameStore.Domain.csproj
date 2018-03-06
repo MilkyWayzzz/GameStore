@@ -93,6 +93,10 @@
     <Compile Include="Migrations\201803061211275_linit.Designer.cs">
       <DependentUpon>201803061211275_linit.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201803061445153_addnewfildtogame.cs" />
+    <Compile Include="Migrations\201803061445153_addnewfildtogame.Designer.cs">
+      <DependentUpon>201803061445153_addnewfildtogame.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Queries\DapperGameQuaries.cs" />
@@ -110,6 +114,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201803061211275_linit.resx">
       <DependentUpon>201803061211275_linit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803061445153_addnewfildtogame.resx">
+      <DependentUpon>201803061445153_addnewfildtogame.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

@@ -20,6 +20,18 @@ namespace GameStore.WebUI.Controllers
             quary = qua;
             repository = repo;
         }
+        public FileContentResult GetImage(int gameId)
+        {
+            Game game = repository.Games.FirstOrDefault(g => g.GameId == gameId);
+            if (game != null)
+            {
+                return File(game.ImageData, game.ImageMimeType);
+            }
+            else
+            {
+                return null;
+            }
+        }
         public ViewResult List(string category, int page = 1)
         {
             GameViewModel model = new GameViewModel

@@ -1,5 +1,6 @@
 ﻿using GameStore.Domain.Abstract;
 using GameStore.Domain.Entities;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,8 +25,6 @@ namespace GameStore.WebUI.Controllers
         [HttpPost]
         public ActionResult Edit(Game game, HttpPostedFileBase image = null)
         {
-            if (ModelState.IsValid)
-            {
                 if (image != null)
                 {
                     game.ImageMimeType = image.ContentType;
@@ -34,12 +33,8 @@ namespace GameStore.WebUI.Controllers
                 }
                 repository.SaveGame(game);
                 TempData["message"] = string.Format("Изменения в игре \"{0}\" были сохранены", game.Name);
-                return RedirectToAction("Index");
-            }
-            else
-            {
-                return View(game);
-            }
+                return Json(game.GameId, JsonRequestBehavior.AllowGet);
+
         }
 
         [HttpPost]
@@ -53,9 +48,15 @@ namespace GameStore.WebUI.Controllers
             return RedirectToAction("Index");
         }
 
-        public ViewResult Create()
+        public ViewResult Create(Game game)
         {
-            return View("Edit", new Game());
+            repository.Create(game);
+            return View("Index");
+        }
+        public ActionResult GetGames ()
+        {
+            var model = JsonConvert.SerializeObject(repository.Games);
+            return Json(model, JsonRequestBehavior.AllowGet);
         }
         public ActionResult Index()
         {

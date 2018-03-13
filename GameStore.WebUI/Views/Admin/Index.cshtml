@@ -11,32 +11,59 @@
     </div>
     <div class="panel-body">
         <table class="table table-striped table-condensed table-bordered">
-            <tr>
-                <th class="text-right">ID</th>
-                <th>Название</th>
-                <th class="text-right">Цена</th>
-                <th class="text-center">Действия</th>
-            </tr>
-            @foreach (var item in Model)
-            {
-            <tr>
-                <td class="text-right">@item.GameId</td>
-                <td>@Html.ActionLink(item.Name, "Edit", new { item.GameId})</td>
-                <td class="text-right">@item.Price.ToString("# руб")</td>
-                <td class="text-center">
-                    @using (Html.BeginForm("Delete", "Admin"))
-                    {
-                        @Html.Hidden("GameId", item.GameId)
-                        <input type="submit" class="btn btn-default btn-xs" value="Удалить" />
-                    }
-                </td>
-            </tr>
-            }
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Название</th>
+                    <th>Описание</th>
+                    <th>Категория</th>
+                    <th class="text-right">Цена</th>
+                </tr>
+            </thead>
+            <tbody id="first"></tbody>
         </table>
+        </div>
     </div>
     <div class="panel-footer">
-        @Html.ActionLink("Добавить игру", "Create", null, new { @class = "btn btn-default"})
+        <button id="openbtn" type="button" class="btn btn-default">New Game</button>
     </div>
-</div>
 
+    <div class="modal fade" id="gameEditor" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="exampleModalLabel">New message</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-inline">
+                        <div class="form-group">
+                            <label for="gameName">Enter Name</label>
+                            <input type="text" class="form-control" id="gameName" placeholder="Fifa14">
+                        </div>
+                        <div class="form-group">
+                            <label for="gameDescr">Description</label>
+                            <input type="text" class="form-control" id="gameDescr" placeholder="Any">
+                        </div>
+                        <div class="form-group">
+                            <label for="gameCategory">Enter Category</label>
+                            <input type="text" class="form-control" id="gameCategory" placeholder="Any">
+                        </div>
+                        <div class="form-group">
+                            <label for="gamePrice">Enter Price</label>
+                            <input type="email" class="form-control" id="gamePrice" placeholder="0.00 руб">
+                        </div>
+                    </form>
 
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button id="addbtn" type="button" class="btn btn-primary">Add</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        @section scripts {
+            <script src="~/Scripts/AdminJs/AdminController.js"></script>
+        }

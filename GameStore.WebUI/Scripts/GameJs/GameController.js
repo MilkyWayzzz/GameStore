@@ -14,7 +14,7 @@
         this.div.empty();
         var that = this
         $.ajax({
-            url: "/Game/GetGames",
+            url: "/Game/GetGames?page="+page+"",
             success: function (data) {
                 var games = data.games
                 games.map(function (game) {
@@ -28,8 +28,9 @@
     generatePages: function (pages, curpage) {
         var that = this
         var pagination = $("#pagination");
+        pagination.empty();
         for (var i = 1; i <= pages; i++) {
-            var a = $('<a href="/Game/GetGames?page=' + i + '">').text(i).attr("data-page", i)
+            var a = $('<a>').text(i).attr("data-page", i)
 
             if (curpage == i) {
                 a.addClass('btn btn-primary')

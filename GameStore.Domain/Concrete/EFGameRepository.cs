@@ -39,25 +39,25 @@ namespace GameStore.Domain.Concrete
             return dbEntry;
         }
 
-        public void SaveGame(Game game)
-        {
-            if (game.GameId == 0)
-                db.Games.Add(game);
-            else
-            {
-                Game dbEntry = db.Games.Find(game.GameId);
-                if (dbEntry !=null)
-                {
-                    dbEntry.Name = game.Name;
-                    dbEntry.Description = game.Description;
-                    dbEntry.Price = game.Price;
-                    dbEntry.Category = game.Category;
-                    dbEntry.ImageData = game.ImageData;
-                    dbEntry.ImageMimeType = game.ImageMimeType;
-                }
-            }
-            db.SaveChanges();
-        }
+        //public void SaveGame(Game game)
+        //{
+        //    if (game.GameId == 0)
+        //        db.Games.Add(game);
+        //    else
+        //    {
+        //        Game dbEntry = db.Games.Find(game.GameId);
+        //        if (dbEntry !=null)
+        //        {
+        //            dbEntry.Name = game.Name;
+        //            dbEntry.Description = game.Description;
+        //            dbEntry.Price = game.Price;
+        //            dbEntry.Category = game.Category;
+        //            dbEntry.ImageData = game.ImageData;
+        //            dbEntry.ImageMimeType = game.ImageMimeType;
+        //        }
+        //    }
+        //    db.SaveChanges();
+        //}
 
         public void Update(Game game)
         {

@@ -9,7 +9,7 @@
             data: game,
             success: function (id) {
                 game.GameId = id;
-                that.addGameToTable(game);
+                that.table.append(that.addGameToTable(game));
             }
         })
     },
@@ -22,7 +22,7 @@
             data: game,
             success: function (id) {
                 game.GameId = id;
-                that.addGameToTable(game);
+                $("tr[data-id=" + game.GameId + "]").replaceWith(that.addGameToTable(game));
             }
         })
     },
@@ -34,12 +34,12 @@
             success: function (data) {
                 var games = JSON.parse(data)
                 games.map(function (game) {
-                    that.addGameToTable(game);
+                    that.table.append(that.addGameToTable(game));
                 })
             }
         })
     },
-
+   
     addGameToTable: function (game) {
         var that = this;
         var tr = $("<tr>").attr("data-id", game.GameId).data('data', game)
@@ -50,11 +50,7 @@
             .append($("<td>").text(game.Price))
             .append($("<td>").html('<button data-action="edit" type="button" class="btn btn-default btn-lg">Edit</button>'))
             .append($("<td>").html('<button data-action="delete" type="button" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>'));
-        that.table.append(tr)
-    },
-
-    editGame: function () {
-
+        return tr;
     },
 
     init: function () {
@@ -74,9 +70,9 @@
         });
 
         $(document).on("click", "button[data-action=edit]", function (ev) {
-            $("#gameEditor").attr("editortype", "1")
             var btn = $(ev.currentTarget)
             var game = btn.closest("tr").data("data")
+            $("#gameEditor").attr("editortype", "0").attr("gameId", game.GameId)
             $("#gameEditor").modal("show")
             $("#gameName").val(game.Name)
             $("#gamePrice").val(game.Price);
@@ -87,9 +83,13 @@
         $("#openbtn").on("click", function () {
             $("#gameEditor").modal("show")
             $("#gameEditor").attr("editortype", "1")
+            $("#gameName").val("")
+            $("#gamePrice").val("");
+            $("#gameDescr").val("");
+            $("#gameCategory").val("");
         })
         $("#addbtn").on("click", function () {
-            var type = $("gameEditor").attr("editortype");
+            var type = $("#gameEditor").attr("editortype");
             if (type == "1") {
                 var name = $("#gameName").val();
                 var price = $("#gamePrice").val();
@@ -114,13 +114,16 @@
                 var price = $("#gamePrice").val();
                 var descr = $("#gameDescr").val();
                 var category = $("#gameCategory").val();
+                var gameId = $("#gameEditor").attr("gameId")
                 var game = {
+                    GameId: gameId,
                     Name: name,
                     Description: descr,
                     Category: category,
                     Price: price
                 }
                 that.editGame(game);
+                $("#gameEditor").modal("hide")
             }
         })
     },

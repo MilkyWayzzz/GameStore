@@ -32,20 +32,32 @@ namespace GameStore.WebUI.Controllers
                 return null;
             }
         }
-        public ViewResult List(string category, int page = 1)
+        public ActionResult List()
         {
-            GameViewModel model = new GameViewModel
+            return View();
+        }
+        public ActionResult GetGames(string category, int page = 1)
+        {
+            var model = new
             {
-                Games = repository.Games.Where(p => category == null || p.Category == category).OrderBy(game => game.GameId).Skip((page - 1) * pageSize).Take(pageSize),
-                PagingInfo = new PagingInfo
-                {
-                    CurrentPage = page,
-                    ItemsPerPage = pageSize,
-                    TotalItems = category == null? repository.Games.Count() : repository.Games.Where(game=>game.Category == category).Count()
-                },
-                CurrentCategory = category
-            };
-            return View(model);
+                games = repository.Games.Where(p => category == null || p.Category == category).OrderBy(game => game.GameId).Skip((page - 1) * pageSize).Take(pageSize),
+                pagecount = (int)Math.Ceiling((decimal)repository.Games.Count() / pageSize),
+                CurrentPage = page
+        };
+            
+            //GameViewModel model = new GameViewModel
+            //{
+            //    Games = repository.Games.Where(p => category == null || p.Category == category).OrderBy(game => game.GameId).Skip((page - 1) * pageSize).Take(pageSize),
+
+            //    PagingInfo = new PagingInfo
+            //    {
+            //        CurrentPage = page,
+            //        ItemsPerPage = pageSize,
+            //        TotalItems = category == null ? repository.Games.Count() : repository.Games.Where(game => game.Category == category).Count()
+            //    },
+            //    CurrentCategory = category
+            //};
+            return Json(model, JsonRequestBehavior.AllowGet);
         }
 
         //public ViewResult List(int page = 1) //new version

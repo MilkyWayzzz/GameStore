@@ -16,7 +16,7 @@ namespace GameStore.Domain.Abstract
          void Delete(int id);
 
          void Update(Game game);
-         void SaveGame(Game game);
+        // void SaveGame(Game game);
          Game DeleteGame(int gameid);
         
     

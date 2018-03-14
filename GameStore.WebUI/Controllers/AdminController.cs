@@ -31,7 +31,7 @@ namespace GameStore.WebUI.Controllers
                     game.ImageData = new byte[image.ContentLength];
                     image.InputStream.Read(game.ImageData, 0, image.ContentLength);
                 }
-                repository.SaveGame(game);
+                repository.Update(game);
                 TempData["message"] = string.Format("Изменения в игре \"{0}\" были сохранены", game.Name);
                 return Json(game.GameId, JsonRequestBehavior.AllowGet);
 

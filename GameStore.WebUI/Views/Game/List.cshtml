@@ -1,15 +1,17 @@
 ﻿
-@model GameStore.Domain.ViewModels.GameViewModel
-
 @{
     ViewBag.Title = "Товары";
 }
 
-@foreach (var p in @Model.Games)
-{
-    @Html.Partial("GameSummary",p)
-}
+<div id="viewdiv">
 
-<div class=" btn-group pull-right">
-    @Html.PageLinks(Model.PagingInfo, x => Url.Action("List", new { page = x, category = Model.CurrentCategory} ))
 </div>
+
+<div id="pagination" class=" btn-group pull-right">
+    @*@Html.PageLinks(Model.PagingInfo, x => Url.Action("List", new { page = x, category = Model.CurrentCategory }))*@
+</div>
+
+
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/GameJs/GameController.js"></script>

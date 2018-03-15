@@ -1,12 +1,14 @@
 ﻿var AdminController = {
     table: $("#first"),
 
-    addGame: function (game) {
+    addGame: function (formData, game) {
         var that = this
         $.ajax({
             url: "/Admin/Create",
             type: "POST",
-            data: game,
+            processData: false,
+            contentType: false,
+            data: formData,
             success: function (id) {
                 game.GameId = id;
                 that.table.append(that.addGameToTable(game));
@@ -14,12 +16,14 @@
         })
     },
 
-    editGame: function (game) {
-        var that = this
+    editGame: function (formData, game) {
+        var that = this;
         $.ajax({
             url: "/Admin/Edit",
             type: "POST",
-            data: game,
+            processData: false,
+            contentType: false,
+            data: formData,
             success: function (id) {
                 game.GameId = id;
                 $("tr[data-id=" + game.GameId + "]").replaceWith(that.addGameToTable(game));
@@ -56,6 +60,7 @@
     init: function () {
         this.showGames();
         var that = this;
+
         $(document).on("click", "button[data-action=delete]", function (ev) {
             var btn = $(ev.currentTarget)
             var id = btn.closest("tr").attr("data-id")
@@ -88,6 +93,7 @@
             $("#gameDescr").val("");
             $("#gameCategory").val("");
         })
+
         $("#addbtn").on("click", function () {
             var type = $("#gameEditor").attr("editortype");
             if (type == "1") {
@@ -95,18 +101,29 @@
                 var price = $("#gamePrice").val();
                 var descr = $("#gameDescr").val();
                 var category = $("#gameCategory").val();
+                var image = document.getElementById('gameImage').files[0];
+
                 var game = {
                     Name: name,
                     Description: descr,
                     Category: category,
                     Price: price
                 }
-                
-                that.addGame(game);
+
+                var formdata = new FormData();
+                formdata.append('Name', name);
+                formdata.append('Description', descr);
+                formdata.append('Category', category);
+                formdata.append('Price', price);
+                formdata.append('image', image);
+
+                that.addGame(formdata, game);
+
                 $("#gameName").val("")
                 $("#gamePrice").val("");
                 $("#gameDescr").val("");
                 $("#gameCategory").val("");
+
                 $("#gameEditor").modal("hide")
             }
             else if (type == "0") {
@@ -115,6 +132,8 @@
                 var descr = $("#gameDescr").val();
                 var category = $("#gameCategory").val();
                 var gameId = $("#gameEditor").attr("gameId")
+                var image = document.getElementById('gameImage').files[0];
+
                 var game = {
                     GameId: gameId,
                     Name: name,
@@ -122,7 +141,17 @@
                     Category: category,
                     Price: price
                 }
-                that.editGame(game);
+
+                var formdata = new FormData();
+                formdata.append('GameId', gameId);
+                formdata.append('Name', name);
+                formdata.append('Description', descr);
+                formdata.append('Category', category);
+                formdata.append('Price', price);
+                formdata.append('image', image);
+             
+                that.editGame(formdata, game);
+
                 $("#gameEditor").modal("hide")
             }
         })

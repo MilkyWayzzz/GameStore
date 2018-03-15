@@ -24,13 +24,35 @@
         @Html.Action("Summary", "Cart")
     </div>
 
-    <div class="visible-xs">
+    @*<div class="visible-xs">
         @Html.Action("Menu", "Nav", new { horizontalNav = true })
-    </div>
+    </div>*@
 
     <div class="row panel">
-        <div id="categories" class="col-sm-3 hidden-xs">
-            @Html.Action("Menu", "Nav")
+        <div class="col-sm-3 hidden-xs">
+            @*@Html.Action("Menu", "Nav")*@
+            <div id="categories">
+                <a class="btn btn-block btn-default btn-lg">Домой</a>
+                
+                     
+
+                @*@foreach (var link in Model)
+                {
+                    @Html.RouteLink(link, new object 
+                    {
+                        controller = "Game",
+                        action = "List",
+                        category = link,
+                        page = 1
+                    }, new
+                    {
+                        @class = (horizontal ? "btn btn-default btn-sm"
+                                   : "btn btn-block btn-default btn-lg")
+                                   + (link == ViewBag.SelectedCategory ? " btn-primary" : "")
+                    })
+                }*@
+
+            </div>
         </div>
         <div class="col-xs-12 col-sm-8">
             @RenderBody()

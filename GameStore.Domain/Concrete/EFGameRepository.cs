@@ -11,7 +11,7 @@ namespace GameStore.Domain.Concrete
     public class EFGameRepository : IGameRepository
     {
         EFDbContext db = new EFDbContext();
-        public IEnumerable<Game> Games
+        public IQueryable<Game> Games
         {
             get { return db.Games;}
         }

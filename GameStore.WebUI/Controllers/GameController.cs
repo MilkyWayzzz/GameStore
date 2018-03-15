@@ -38,12 +38,15 @@ namespace GameStore.WebUI.Controllers
         }
         public ActionResult GetGames(string category, int page = 1)
         {
+            var query = repository.Games.Where(p => category == null || p.Category == category);
+            var count = query.Count();
+            query = query.OrderBy(game => game.GameId).Skip((page - 1) * pageSize).Take(pageSize);
             var model = new
             {
-                games = repository.Games.Where(p => category == null || p.Category == category).OrderBy(game => game.GameId).Skip((page - 1) * pageSize).Take(pageSize),
-                pagecount = (int)Math.Ceiling((decimal)repository.Games.Count() / pageSize),
+                games = query.ToArray(),
+                pagecount = (int)Math.Ceiling((decimal)count / pageSize),
                 CurrentPage = page
-        };
+            };
             
             //GameViewModel model = new GameViewModel
             //{

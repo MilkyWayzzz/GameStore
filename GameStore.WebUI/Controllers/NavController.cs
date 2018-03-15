@@ -14,12 +14,16 @@ namespace GameStore.WebUI.Controllers
         {
             repository = repo;
         }
-        public PartialViewResult Menu(string category = null)
+        public ActionResult Menu(string category = null)
         {
-            ViewBag.SelectedCategory = category;
+            //ViewBag.SelectedCategory = category;
 
-            IEnumerable<string> categories = repository.Games.Select(game => game.Category).Distinct().OrderBy(x => x);
-            return PartialView("FlexMenu",categories);
+            
+            var model = new
+            {
+                categories = repository.Games.Select(game => game.Category).Distinct().OrderBy(x => x),
+            };
+            return Json(model, JsonRequestBehavior.AllowGet);
         }
     }
 }

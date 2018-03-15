@@ -9,7 +9,7 @@ namespace GameStore.Domain.Abstract
 {
     public interface IGameRepository
     {
-        IEnumerable<Game> Games { get; }
+        IQueryable<Game> Games { get; }
 
          void Create(Game game);
 

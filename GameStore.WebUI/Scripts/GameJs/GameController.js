@@ -2,15 +2,18 @@
     div: $("#viewdiv"),
 
     addGamesToTable: function (game) {
-        var tr = $('<div class="well" style="margin-right: 10px">')
-            .append($('<div class="pull-left" style="margin-right: 10px><img class="img-thumbnail" width="75" height="75" src="/Game/GetImage?gameId=' + game.GameId + '"></div>'))
+        var $game = $('<div class="well" style="margin-right: 10px">');
+
+        if (game.ImageData != null)
+            $game.append($('<div class="pull-left" style="margin-right: 10px">').html('<img class="img-thumbnail" width="75" height="75" src="/Game/GetImage?gameId=' + game.GameId + '" />'));
+
+        $game
             .append($("<div>").html('<h3><strong>' + game.Name + '</strong><span class="pull-right label label-primary">' + game.Price + '</span></h3>'))
             .append($('<div class="pull-right">').html('<input type="submit" class=" btn btn-success" value="Добавить в корзину"/>'))
             .append($('<span class="lead">').text(game.Description))
-        return tr
+        return $game;
     },
 
-    
     showGame: function (page, category) {
         this.div.empty();
         var that = this
